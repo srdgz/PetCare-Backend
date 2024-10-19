@@ -1,5 +1,6 @@
 package com.petcare_backend.petcare.modelo;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -22,6 +23,7 @@ public class User {
     private String email;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<Pet> pets;
 
     // Constructores, getters y setters

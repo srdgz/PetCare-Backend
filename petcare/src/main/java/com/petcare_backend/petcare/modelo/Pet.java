@@ -1,5 +1,6 @@
 package com.petcare_backend.petcare.modelo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +23,8 @@ public class Pet {
     private String breed;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id")
+    @JoinColumn(name = "owner_id", nullable = false)
+    @JsonBackReference
     private User owner;
 
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -128,7 +130,7 @@ public class Pet {
                 ", name='" + name + '\'' +
                 ", species='" + species + '\'' +
                 ", breed='" + breed + '\'' +
-                ", owner=" + (owner != null ? owner.getUsername() : "N/A") +
+                ", user_id=" + (owner != null ? owner.getId() : "N/A") +
                 '}';
     }
 

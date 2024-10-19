@@ -32,7 +32,7 @@ public class SecurityConfig {
         http.csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
-                .requestMatchers("/api/users/**").authenticated()
+                .requestMatchers("/api/users/**", "api/pets/**").authenticated()
                 .anyRequest().authenticated();
 
         // Usa el filtro gestionado por Spring en lugar de instanciar uno nuevo
