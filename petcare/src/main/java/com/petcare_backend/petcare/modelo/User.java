@@ -26,7 +26,7 @@ public class User {
     @JsonManagedReference
     private List<Pet> pets;
 
-    // Constructores, getters y setters
+    // Constructores
     public User() {}
 
     public User(String username, String password, String email) {
