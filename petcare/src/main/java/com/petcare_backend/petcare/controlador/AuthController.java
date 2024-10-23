@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,12 +33,14 @@ public class AuthController {
     private UserDetailsService userDetailsService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody User user) {
+    public ResponseEntity<Map<String, String>> registerUser(@RequestBody User user) {
         try {
             User newUser = userServicio.register(user);
-            return ResponseEntity.ok("Usuario registrado exitosamente: " + newUser.getUsername());
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "Usuario registrado exitosamente: " + newUser.getUsername());
+            return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
+            return ResponseEntity.badRequest().body(Collections.singletonMap("error", e.getMessage()));
         }
     }
 
