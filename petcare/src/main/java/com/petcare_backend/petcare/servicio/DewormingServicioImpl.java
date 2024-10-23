@@ -1,6 +1,7 @@
 package com.petcare_backend.petcare.servicio;
 
 import com.petcare_backend.petcare.modelo.Deworming;
+import com.petcare_backend.petcare.modelo.Pet;
 import com.petcare_backend.petcare.repositorio.DewormingRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,8 @@ public class DewormingServicioImpl implements DewormingServicio {
     }
 
     @Override
-    public List<Deworming> findAllDewormings() {
-        return dewormingRepositorio.findAll();
+    public List<Deworming> findDewormingsByPet(Pet pet) {
+        return dewormingRepositorio.findByPet(pet);
     }
 
     @Override

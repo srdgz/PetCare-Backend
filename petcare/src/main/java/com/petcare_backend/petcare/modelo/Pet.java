@@ -2,11 +2,16 @@ package com.petcare_backend.petcare.modelo;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "pets")
+@Getter
+@Setter
 public class Pet {
 
     @Id
@@ -21,6 +26,9 @@ public class Pet {
 
     @Column(name = "breed")
     private String breed;
+
+    @Column(name = "avatar")
+    private String avatar;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id", nullable = false)
@@ -42,84 +50,12 @@ public class Pet {
     // Constructores
     public Pet() {}
 
-    public Pet(String name, String species, String breed, User owner) {
+    public Pet(String name, String species, String breed, String avatar, User owner) {
         this.name = name;
         this.species = species;
         this.breed = breed;
+        this.avatar = avatar;
         this.owner = owner;
-    }
-
-    // Getters y setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSpecies() {
-        return species;
-    }
-
-    public void setSpecies(String species) {
-        this.species = species;
-    }
-
-    public String getBreed() {
-        return breed;
-    }
-
-    public void setBreed(String breed) {
-        this.breed = breed;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
-    public List<Vaccination> getVaccinations() {
-        return vaccinations;
-    }
-
-    public void setVaccinations(List<Vaccination> vaccinations) {
-        this.vaccinations = vaccinations;
-    }
-
-    public List<Deworming> getDewormings() {
-        return dewormings;
-    }
-
-    public void setDewormings(List<Deworming> dewormings) {
-        this.dewormings = dewormings;
-    }
-
-    public List<FleaTreatment> getFleaTreatments() {
-        return fleaTreatments;
-    }
-
-    public void setFleaTreatments(List<FleaTreatment> fleaTreatments) {
-        this.fleaTreatments = fleaTreatments;
-    }
-
-    public List<Medication> getMedications() {
-        return medications;
-    }
-
-    public void setMedications(List<Medication> medications) {
-        this.medications = medications;
     }
 
     // Método toString

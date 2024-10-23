@@ -1,11 +1,16 @@
 package com.petcare_backend.petcare.modelo;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
 @Table(name = "dewormings")
+@Getter
+@Setter
 public class Deworming {
 
     @Id
@@ -18,49 +23,24 @@ public class Deworming {
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
+    @Column(name = "periodicity")
+    private Integer periodicity;
+
+    @Column(name = "reminder_date")
+    private LocalDate reminderDate;
+
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "pet_id")
+    @JoinColumn(name = "pet_id", nullable = false)
     private Pet pet;
 
     // Constructores
     public Deworming() {}
 
-    public Deworming(String dewormingName, LocalDate date, Pet pet) {
+    public Deworming(String dewormingName, LocalDate date, Integer periodicity, LocalDate reminderDate, Pet pet) {
         this.dewormingName = dewormingName;
         this.date = date;
-        this.pet = pet;
-    }
-
-    // Getters y setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDewormingName() {
-        return dewormingName;
-    }
-
-    public void setDewormingName(String dewormingName) {
-        this.dewormingName = dewormingName;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public Pet getPet() {
-        return pet;
-    }
-
-    public void setPet(Pet pet) {
+        this.periodicity = periodicity;
+        this.reminderDate = reminderDate;
         this.pet = pet;
     }
 

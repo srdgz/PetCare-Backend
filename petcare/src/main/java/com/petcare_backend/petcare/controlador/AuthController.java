@@ -3,8 +3,6 @@ package com.petcare_backend.petcare.controlador;
 import com.petcare_backend.petcare.modelo.User;
 import com.petcare_backend.petcare.servicio.UserServicio;
 import com.petcare_backend.petcare.util.JwtUtil;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -14,8 +14,8 @@ public class PetServicioImpl implements PetServicio {
     private final PetRepositorio petRepositorio;
 
     @Autowired
-    public PetServicioImpl(PetRepositorio petRepository) {
-        this.petRepositorio = petRepository;
+    public PetServicioImpl(PetRepositorio petRepositorio) {
+        this.petRepositorio = petRepositorio;
     }
 
     @Override
@@ -29,8 +29,8 @@ public class PetServicioImpl implements PetServicio {
     }
 
     @Override
-    public List<Pet> findAllPets() {
-        return petRepositorio.findAll();
+    public List<Pet> findPetsByOwner(User owner) {
+        return petRepositorio.findPetsByOwner(owner);
     }
 
     @Override
@@ -38,9 +38,22 @@ public class PetServicioImpl implements PetServicio {
         petRepositorio.deleteById(id);
     }
 
-    @Override
-    public List<Pet> findByOwner(User owner) {
-        return petRepositorio.findByOwner(owner);
+    public Pet updatePet(Long id, Pet petDetails) {
+        Pet existingPet = findPetById(id);
+        if (existingPet != null) {
+            if (petDetails.getName() != null) {
+                existingPet.setName(petDetails.getName());
+            }
+            if (petDetails.getSpecies() != null) {
+                existingPet.setSpecies(petDetails.getSpecies());
+            }
+            if (petDetails.getBreed() != null) {
+                existingPet.setBreed(petDetails.getBreed());
+            }
+            return petRepositorio.save(existingPet);
+        }
+        return null;
     }
+
 }
 

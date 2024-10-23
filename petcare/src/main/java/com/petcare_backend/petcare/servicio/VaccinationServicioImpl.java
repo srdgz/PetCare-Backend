@@ -1,5 +1,6 @@
 package com.petcare_backend.petcare.servicio;
 
+import com.petcare_backend.petcare.modelo.Pet;
 import com.petcare_backend.petcare.modelo.Vaccination;
 import com.petcare_backend.petcare.repositorio.VaccinationRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,8 @@ public class VaccinationServicioImpl implements VaccinationServicio {
         return vaccinationRepositorio.findById(id).orElse(null);
     }
 
-    @Override
-    public List<Vaccination> findAllVaccinations() {
-        return vaccinationRepositorio.findAll();
+    public List<Vaccination> findVaccinationsByPet(Pet pet) {
+        return vaccinationRepositorio.findByPet(pet);
     }
 
     @Override

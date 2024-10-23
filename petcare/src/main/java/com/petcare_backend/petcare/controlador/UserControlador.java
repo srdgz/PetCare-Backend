@@ -26,15 +26,21 @@ public class UserControlador {
         return ResponseEntity.ok(createdUser);
     }
 
+    @GetMapping
+    public List<User> getAllUsers() {
+        return userServicio.findAllUsers();
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         User user = userServicio.findUserById(id);
         return user != null ? ResponseEntity.ok(user) : ResponseEntity.notFound().build();
     }
 
-    @GetMapping
-    public List<User> getAllUsers() {
-        return userServicio.findAllUsers();
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
+        User updatedUser = userServicio.updateUser(id, userDetails);
+        return updatedUser != null ? ResponseEntity.ok(updatedUser) : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")

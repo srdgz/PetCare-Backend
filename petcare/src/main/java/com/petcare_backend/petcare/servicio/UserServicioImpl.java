@@ -22,25 +22,21 @@ public class UserServicioImpl implements UserServicio {
 
     @Override
     public User register(User user) {
-        // Verificar si el nombre de usuario o el email ya están en uso
-        if (userRepositorio.findByUsername(user.getUsername()) != null) {
+        if (userRepositorio.findUserByUsername(user.getUsername()) != null) {
             throw new IllegalArgumentException("El nombre de usuario ya está en uso.");
         }
 
-        if (userRepositorio.findByEmail(user.getEmail()) != null) {
+        if (userRepositorio.findUserByEmail(user.getEmail()) != null) {
             throw new IllegalArgumentException("El email ya está en uso.");
         }
 
-        // Encriptar la contraseña
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        // Guardar el usuario
         return userRepositorio.save(user);
     }
 
     @Override
     public User saveUser(User user) {
-        // Encriptar la contraseña antes de guardar el usuario
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepositorio.save(user);
     }
@@ -60,8 +56,26 @@ public class UserServicioImpl implements UserServicio {
         userRepositorio.deleteById(id);
     }
 
-    // Método adicional para buscar usuarios por nombre de usuario
-    public User findByUsername(String username) {
-        return userRepositorio.findByUsername(username);
+    public User updateUser(Long id, User userDetails) {
+        User existingUser = findUserById(id);
+        if (existingUser != null) {
+            if (userDetails.getPassword() != null) {
+                existingUser.setPassword(userDetails.getPassword());
+            }
+            if (userDetails.getAvatar() != null) {
+                existingUser.setAvatar(userDetails.getAvatar());
+            }
+            return saveUser(existingUser);
+        }
+        return null;
+    }
+
+    // Método adicional para buscar usuarios por nombre de usuario e email
+    public User findUserByUsername(String username) {
+        return userRepositorio.findUserByUsername(username);
+    }
+
+    public User findUserByEmail(String email) {
+        return userRepositorio.findUserByEmail(email);
     }
 }

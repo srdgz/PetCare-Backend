@@ -1,6 +1,7 @@
 package com.petcare_backend.petcare.servicio;
 
 import com.petcare_backend.petcare.modelo.Medication;
+import com.petcare_backend.petcare.modelo.Pet;
 import com.petcare_backend.petcare.repositorio.MedicationRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,8 @@ public class MedicationServicioImpl implements MedicationServicio {
     }
 
     @Override
-    public List<Medication> findAllMedications() {
-        return medicationRepositorio.findAll();
+    public List<Medication> findMedicationsByPet(Pet pet) {
+        return medicationRepositorio.findByPet(pet);
     }
 
     @Override

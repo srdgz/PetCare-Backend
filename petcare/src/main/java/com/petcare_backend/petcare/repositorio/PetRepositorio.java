@@ -6,6 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface PetRepositorio extends JpaRepository<Pet, Long> {
-    // Ejemplo de consulta personalizada: encontrar mascotas por dueño
-    List<Pet> findByOwner(User owner);
+    List<Pet> findPetsByOwner(User owner);
 }

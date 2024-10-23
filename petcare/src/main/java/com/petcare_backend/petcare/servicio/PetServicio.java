@@ -8,7 +8,8 @@ import java.util.List;
 public interface PetServicio {
     Pet savePet(Pet pet);
     Pet findPetById(Long id);
-    List<Pet> findAllPets();
+    List<Pet> findPetsByOwner(User owner);
+    Pet updatePet(Long id, Pet petDetails);
     void deletePet(Long id);
-    List<Pet> findByOwner(User owner);
+
 }
