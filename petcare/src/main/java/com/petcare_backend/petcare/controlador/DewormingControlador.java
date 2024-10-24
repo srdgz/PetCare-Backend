@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/dewormings")
+@CrossOrigin(origins = "http://localhost:4200")
 public class DewormingControlador {
 
     private final DewormingServicio dewormingServicio;

@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/flea-treatments")
+@CrossOrigin(origins = "http://localhost:4200")
 public class FleaTreatmentControlador {
 
     private final FleaTreatmentServicio fleaTreatmentServicio;

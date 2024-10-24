@@ -6,6 +6,7 @@ import java.util.List;
 public interface UserServicio {
     User register(User user);
     User saveUser(User user);
+    User saveUserWithoutEncoder(User user);
     User findUserById(Long id);
     User findUserByUsername(String username);
     User findUserByEmail(String email);

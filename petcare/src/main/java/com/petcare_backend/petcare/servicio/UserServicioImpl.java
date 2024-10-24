@@ -1,5 +1,6 @@
 package com.petcare_backend.petcare.servicio;
 
+import com.cloudinary.Cloudinary;
 import com.petcare_backend.petcare.modelo.User;
 import com.petcare_backend.petcare.repositorio.UserRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServicioImpl implements UserServicio {
@@ -19,6 +21,8 @@ public class UserServicioImpl implements UserServicio {
         this.userRepositorio = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
+    @Autowired
+    private Cloudinary cloudinary;
 
     @Override
     public User register(User user) {
@@ -42,6 +46,12 @@ public class UserServicioImpl implements UserServicio {
     }
 
     @Override
+    public User saveUserWithoutEncoder(User user) {
+        user.setPassword(user.getPassword());
+        return userRepositorio.save(user);
+    }
+
+    @Override
     public User findUserById(Long id) {
         return userRepositorio.findById(id).orElse(null);
     }
@@ -59,15 +69,28 @@ public class UserServicioImpl implements UserServicio {
     public User updateUser(Long id, User userDetails) {
         User existingUser = findUserById(id);
         if (existingUser != null) {
-            if (userDetails.getPassword() != null) {
-                existingUser.setPassword(userDetails.getPassword());
-            }
             if (userDetails.getAvatar() != null) {
-                existingUser.setAvatar(userDetails.getAvatar());
+                String avatarUrl = uploadImageToCloudinary(userDetails.getAvatar());
+                existingUser.setAvatar(avatarUrl);
             }
-            return saveUser(existingUser);
+            if (userDetails.getPassword() != null && !userDetails.getPassword().isEmpty()) {
+                existingUser.setPassword(userDetails.getPassword());
+                return saveUser(existingUser);
+            }
+            else {
+                return saveUserWithoutEncoder(existingUser);
+            }
         }
         return null;
+    }
+
+    private String uploadImageToCloudinary(String base64Image) {
+        try {
+            Map<String, Object> uploadResult = cloudinary.uploader().upload(base64Image, Map.of());
+            return (String) uploadResult.get("secure_url");
+        } catch (Exception e) {
+            throw new RuntimeException("Error al subir la imagen a Cloudinary", e);
+        }
     }
 
     // Método adicional para buscar usuarios por nombre de usuario e email

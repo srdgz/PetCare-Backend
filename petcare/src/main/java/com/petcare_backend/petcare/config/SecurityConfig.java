@@ -29,10 +29,12 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.cors()
+                .and()
+                .csrf().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
-                .requestMatchers("/api/users/**", "api/pets/**").authenticated()
+                .requestMatchers("/api/users/**", "/api/pets/**").authenticated()
                 .anyRequest().authenticated();
 
         // Usa el filtro gestionado por Spring en lugar de instanciar uno nuevo

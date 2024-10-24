@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,11 +51,19 @@ public class AuthController {
             UsernamePasswordAuthenticationToken userToken = new UsernamePasswordAuthenticationToken(username, pass);
             authenticationManager.authenticate(userToken);
 
-            final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-            String token = jwtUtil.generateToken(userDetails.getUsername());
+            String token = jwtUtil.generateToken(username);
+
+            User customUser = userServicio.findUserByUsername(username);
+            if (customUser == null) {
+                throw new Exception("Usuario no encontrado");
+            }
 
             Map<String, String> response = new HashMap<>();
             response.put("token", token);
+            response.put("username", customUser.getUsername());
+            response.put("email", customUser.getEmail());
+            response.put("id", customUser.getId().toString());
+
             return ResponseEntity.ok(response);
         } catch (Exception error) {
             throw new Exception("No se ha podido hacer login: " + error.getMessage());

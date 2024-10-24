@@ -83,7 +83,20 @@
 			<version>4.0.1</version>
 			<scope>provided</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary</artifactId>
+			<version>1.0.14</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.github.cdimascio</groupId>
+			<artifactId>dotenv-java</artifactId>
+			<version>2.2.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
