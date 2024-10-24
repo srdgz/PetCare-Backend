@@ -8,7 +8,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class PetcareApplication {
 
 	public static void main(String[] args) {
-		Dotenv dotenv = Dotenv.load();
+		Dotenv.configure()
+				.directory("C:\\Users\\Sandra\\Desktop\\PetCare-Backend\\.env")
+				.load();
 		SpringApplication.run(PetcareApplication.class, args);
 	}
 
